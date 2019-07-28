@@ -431,6 +431,7 @@
     cmap w!! call WriteAsSuperUser(@%)         " Write file as super-user.
 
     " Helper Function: Used by user Ex commands. {{{1
+        " Due credits to answer by Zenexer at stack overflow https://stackoverflow.com/questions/1005/getting-root-permissions-on-a-file-inside-of-vi/12870763#12870763
         function GetNullDevice() " Gets the path to the null device. {{{2
             if filewritable('/dev/null')
                 return '/dev/null'
