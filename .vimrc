@@ -426,8 +426,25 @@
     vnoremap . :normal .<CR>
 
     " For when you forget to sudo.. Really Write the file.
-    cmap W! silent execute 'write !sudo tee ' . shellescape(@%, 1) . ' >/dev/null'
-    cmap w!! silent execute 'write !sudo tee ' . shellescape(@%, 1) . ' >/dev/null'
+    " General Commands: User Ex commands. {{{1
+    cmap W! call WriteAsSuperUser(@%)         " Write file as super-user.
+    cmap w!! call WriteAsSuperUser(@%)         " Write file as super-user.
+
+    " Helper Function: Used by user Ex commands. {{{1
+        function GetNullDevice() " Gets the path to the null device. {{{2
+            if filewritable('/dev/null')
+                return '/dev/null'
+            else
+                return 'NUL'
+            endif
+        endfunction
+
+        function WriteAsSuperUser(file) " Write buffer to a:file as the super user (on POSIX, root). {{{2
+            exec '%write !sudo tee ' . shellescape(a:file, 1) . ' >' . GetNullDevice()
+        endfunction
+
+
+    " }}}1
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
