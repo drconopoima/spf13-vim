@@ -426,7 +426,8 @@
     vnoremap . :normal .<CR>
 
     " For when you forget to sudo.. Really Write the file.
-    cmap w!! w !sudo tee % >/dev/null
+    cmap W! silent execute 'write !sudo tee ' . shellescape(@%, 1) . ' >/dev/null'
+    cmap w!! silent execute 'write !sudo tee ' . shellescape(@%, 1) . ' >/dev/null'
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
